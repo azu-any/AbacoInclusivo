@@ -1,17 +1,26 @@
 module hex_decoder (
-    input  wire [1:0] state_in,
-    output reg  [6:0] hex_out
+    input wire [3:0] bin_in,
+    output reg [6:0] hex_out
 );
-
-    // DE10-Lite displays are ACTIVE LOW (0 = ON, 1 = OFF)
-    // The 7 bits map to segments: {g, f, e, d, c, b, a}
     always @(*) begin
-        case (state_in)
-            2'd0: hex_out = 7'b1000000; // State 0 (Idle)     -> Shows '0'
-            2'd1: hex_out = 7'b1111001; // State 1 (Positive) -> Shows '1'
-            2'd2: hex_out = 7'b0111111; // State 2 (Negative) -> Shows '-' (Minus sign)
-            default: hex_out = 7'b1111111; // Blank/Off
+        case (bin_in)
+            4'h0: hex_out = 7'b1000000; // 0
+            4'h1: hex_out = 7'b1111001; // 1
+            4'h2: hex_out = 7'b0100100; // 2
+            4'h3: hex_out = 7'b0110000; // 3
+            4'h4: hex_out = 7'b0011001; // 4
+            4'h5: hex_out = 7'b0010010; // 5
+            4'h6: hex_out = 7'b0000010; // 6
+            4'h7: hex_out = 7'b1111000; // 7
+            4'h8: hex_out = 7'b0000000; // 8
+            4'h9: hex_out = 7'b0010000; // 9
+            4'hA: hex_out = 7'b0001000; // A
+            4'hB: hex_out = 7'b0000011; // b
+            4'hC: hex_out = 7'b1000110; // C
+            4'hD: hex_out = 7'b0100001; // d
+            4'hE: hex_out = 7'b0000110; // E
+            4'hF: hex_out = 7'b0001110; // F
+            default: hex_out = 7'b1111111; // Blank
         endcase
     end
-
 endmodule
